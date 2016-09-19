@@ -13,6 +13,7 @@
 		8493D4371D90851600BCCD26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8493D4361D90851600BCCD26 /* Assets.xcassets */; };
 		8493D43A1D90851600BCCD26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8493D4381D90851600BCCD26 /* LaunchScreen.storyboard */; };
 		8493D4431D9085E700BCCD26 /* UIRootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D4421D9085E700BCCD26 /* UIRootTableViewController.m */; };
+		8493D4461D908A4700BCCD26 /* TTRssSourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D4451D908A4700BCCD26 /* TTRssSourceModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		8493D43B1D90851600BCCD26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8493D4411D9085E700BCCD26 /* UIRootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRootTableViewController.h; sourceTree = "<group>"; };
 		8493D4421D9085E700BCCD26 /* UIRootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIRootTableViewController.m; sourceTree = "<group>"; };
+		8493D4441D908A4700BCCD26 /* TTRssSourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRssSourceModel.h; sourceTree = "<group>"; };
+		8493D4451D908A4700BCCD26 /* TTRssSourceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRssSourceModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 				8493D42A1D90851600BCCD26 /* Supporting Files */,
 				8493D4411D9085E700BCCD26 /* UIRootTableViewController.h */,
 				8493D4421D9085E700BCCD26 /* UIRootTableViewController.m */,
+				8493D4441D908A4700BCCD26 /* TTRssSourceModel.h */,
+				8493D4451D908A4700BCCD26 /* TTRssSourceModel.m */,
 			);
 			path = TTRssReader;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 				8493D42F1D90851600BCCD26 /* AppDelegate.m in Sources */,
 				8493D42C1D90851600BCCD26 /* main.m in Sources */,
 				8493D4431D9085E700BCCD26 /* UIRootTableViewController.m in Sources */,
+				8493D4461D908A4700BCCD26 /* TTRssSourceModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,46 +1,59 @@
 //
-//  UIRootTableViewController.m
+//  UIRssNewsTableViewController.m
 //  TTRssReader
 //
-//  Created by Admin on 19.09.16.
+//  Created by Admin on 20.09.16.
 //  Copyright © 2016 doungram. All rights reserved.
 //
 
-#import "UIRootTableViewController.h"
 #import "UIRssNewsTableViewController.h"
+#import "TTRssNewsParser.h"
+#import "TTRssNewsModel.h"
+#import "TTRssSQL.h"
 
-@interface UIRootTableViewController ()
+
+@interface UIRssNewsTableViewController ()
 
 @end
 
-@implementation UIRootTableViewController
+@implementation UIRssNewsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"RSS list";
+    __block BOOL errorConnection = NO;
     
-    TTRssSQL * sql = [[TTRssSQL alloc] init];
+    TTRssSQL * sqlControl = [[TTRssSQL alloc] init];
     
-     if ([sql createSourceTable])
-     [sql appendSourceItemWithName:@"Yandex.ru" andURL:@"https://news.yandex.ru/index.rss"];
+    TTRssNewsParser * parser = [[TTRssNewsParser alloc] init];
+    [parser getNewsRssDictionaryWithSourceURL:_sourceURL andCallback:^(NSArray *rssNewsArray, BOOL error) {
+        
+        if (!error){
+            collectionRssNews = [[NSMutableArray alloc] init];
     
-    
-    sourceItemRSS = [[NSMutableArray alloc] init];
-    
-    [sql getSourceItemsArrayWithCallback:^(NSArray * sourceSqlRss) {
-
-        for (NSDictionary * source in sourceSqlRss)
-        {
-            TTRssSourceModel * sourceRSS = [[TTRssSourceModel alloc] initWithName:[source valueForKey:@"name"] andURL:[source valueForKey:@"url"]];
+            for (NSDictionary * item in rssNewsArray){
+                TTRssNewsModel * itemNews = [[TTRssNewsModel alloc] initWithSource:item[@"source"] andTitle:item[@"title"] andDetail:item[@"detail"]];
+                [collectionRssNews addObject:itemNews];
+            }
             
-            NSLog(@"%@", source);
-            [sourceItemRSS addObject:sourceRSS];
+            [sqlControl saveRssNewsWithName:_sourceName fromArray:rssNewsArray];
+            
+        }else{
+            errorConnection = error;
         }
-        NSLog(@"%@", sourceItemRSS);
-        [self.tableView reloadData];
     }];
     
+    if (errorConnection)
+    {
+        [sqlControl loadRssNewsWithSource:_sourceName withCallback:^(NSArray * list) {
+            collectionRssNews = [[NSMutableArray alloc] init];
+            for (NSDictionary * item in list){
+                TTRssNewsModel * itemNews = [[TTRssNewsModel alloc] initWithSource:item[@"source"] andTitle:item[@"title"] andDetail:item[@"detail"]];
+                [collectionRssNews addObject:itemNews];
+            }
+        }];
+        
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -62,28 +75,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //#warning Incomplete implementation, return the number of rows
-    return [sourceItemRSS count];
+    return [collectionRssNews count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IDSourceRSSCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IDRssNewsCell" forIndexPath:indexPath];
     
-    if (cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"IDSourceRSSCell"];
-    
-    cell.textLabel.text = sourceItemRSS[indexPath.row].name;
-    cell.detailTextLabel.text = [sourceItemRSS[indexPath.row].url absoluteString];
-    
+    if(!cell)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"IDRssNewsCell" ];
     // Configure the cell...
+    
+    cell.textLabel.text = collectionRssNews[indexPath.row].title;
+    
     
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self performSegueWithIdentifier:@"IDSegueNewsList" sender:sourceItemRSS[indexPath.row]];
-}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -118,21 +127,14 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"IDSegueNewsList"])
-    {
-        UIRssNewsTableViewController * destination = [segue destinationViewController];
-        destination.sourceURL = ((TTRssSourceModel*)sender).url;
-        destination.sourceName = ((TTRssSourceModel*)sender).name;
-    }
-    
 }
-
+*/
 
 @end

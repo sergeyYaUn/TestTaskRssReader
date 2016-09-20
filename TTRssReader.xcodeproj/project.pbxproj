@@ -16,6 +16,9 @@
 		8493D4461D908A4700BCCD26 /* TTRssSourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D4451D908A4700BCCD26 /* TTRssSourceModel.m */; };
 		8493D4491D9092DF00BCCD26 /* TTRssSQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D4481D9092DF00BCCD26 /* TTRssSQL.m */; };
 		8493D44C1D9092F500BCCD26 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8493D44B1D9092F500BCCD26 /* libsqlite3.tbd */; };
+		8493D44F1D910CA700BCCD26 /* TTRssNewsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D44E1D910CA700BCCD26 /* TTRssNewsParser.m */; };
+		8493D4521D910DB100BCCD26 /* UIRssNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D4511D910DB100BCCD26 /* UIRssNewsTableViewController.m */; };
+		84BB53821D91BD4900FAC214 /* TTRssNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BB53811D91BD4900FAC214 /* TTRssNewsModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,12 @@
 		8493D4471D9092DF00BCCD26 /* TTRssSQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRssSQL.h; sourceTree = "<group>"; };
 		8493D4481D9092DF00BCCD26 /* TTRssSQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRssSQL.m; sourceTree = "<group>"; };
 		8493D44B1D9092F500BCCD26 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		8493D44D1D910CA700BCCD26 /* TTRssNewsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRssNewsParser.h; sourceTree = "<group>"; };
+		8493D44E1D910CA700BCCD26 /* TTRssNewsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRssNewsParser.m; sourceTree = "<group>"; };
+		8493D4501D910DB100BCCD26 /* UIRssNewsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRssNewsTableViewController.h; sourceTree = "<group>"; };
+		8493D4511D910DB100BCCD26 /* UIRssNewsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIRssNewsTableViewController.m; sourceTree = "<group>"; };
+		84BB53801D91BD4900FAC214 /* TTRssNewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRssNewsModel.h; sourceTree = "<group>"; };
+		84BB53811D91BD4900FAC214 /* TTRssNewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRssNewsModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,10 +86,16 @@
 				8493D42A1D90851600BCCD26 /* Supporting Files */,
 				8493D4411D9085E700BCCD26 /* UIRootTableViewController.h */,
 				8493D4421D9085E700BCCD26 /* UIRootTableViewController.m */,
+				8493D4501D910DB100BCCD26 /* UIRssNewsTableViewController.h */,
+				8493D4511D910DB100BCCD26 /* UIRssNewsTableViewController.m */,
 				8493D4441D908A4700BCCD26 /* TTRssSourceModel.h */,
 				8493D4451D908A4700BCCD26 /* TTRssSourceModel.m */,
+				84BB53801D91BD4900FAC214 /* TTRssNewsModel.h */,
+				84BB53811D91BD4900FAC214 /* TTRssNewsModel.m */,
 				8493D4471D9092DF00BCCD26 /* TTRssSQL.h */,
 				8493D4481D9092DF00BCCD26 /* TTRssSQL.m */,
+				8493D44D1D910CA700BCCD26 /* TTRssNewsParser.h */,
+				8493D44E1D910CA700BCCD26 /* TTRssNewsParser.m */,
 			);
 			path = TTRssReader;
 			sourceTree = "<group>";
@@ -172,7 +187,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8493D4521D910DB100BCCD26 /* UIRssNewsTableViewController.m in Sources */,
+				84BB53821D91BD4900FAC214 /* TTRssNewsModel.m in Sources */,
 				8493D42F1D90851600BCCD26 /* AppDelegate.m in Sources */,
+				8493D44F1D910CA700BCCD26 /* TTRssNewsParser.m in Sources */,
 				8493D42C1D90851600BCCD26 /* main.m in Sources */,
 				8493D4491D9092DF00BCCD26 /* TTRssSQL.m in Sources */,
 				8493D4431D9085E700BCCD26 /* UIRootTableViewController.m in Sources */,

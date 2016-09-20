@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TTRssSQL.h"
+#import "TTRssSourceModel.h"
+
 
 @interface UIRootTableViewController : UITableViewController
+{
+    NSMutableArray<TTRssSourceModel*> * sourceItemRSS;
+}
 
 @end

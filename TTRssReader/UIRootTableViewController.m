@@ -17,6 +17,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"RSS list";
+    
+    TTRssSQL * sql = [[TTRssSQL alloc] init];
+    
+     if ([sql createSourceTable])
+     [sql appendSourceItemWithName:@"Yandex.ru" andURL:@"https://news.yandex.ru/index.rss"];
+    
+    
+    sourceItemRSS = [[NSMutableArray alloc] init];
+    
+    [sql getSourceItemsArrayWithCallback:^(NSArray * sourceSqlRss) {
+
+        for (NSDictionary * source in sourceSqlRss)
+        {
+            TTRssSourceModel * sourceRSS = [[TTRssSourceModel alloc] initWithName:[source valueForKey:@"name"] andURL:[source valueForKey:@"url"]];
+            
+            NSLog(@"%@", source);
+            [sourceItemRSS addObject:sourceRSS];
+        }
+        NSLog(@"%@", sourceItemRSS);
+        [self.tableView reloadData];
+    }];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -32,25 +55,34 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+//#warning Incomplete implementation, return the number of sections
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+//#warning Incomplete implementation, return the number of rows
+    return [sourceItemRSS count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IDSourceRSSCell" forIndexPath:indexPath];
+    
+    if (cell == nil)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"IDSourceRSSCell"];
+    
+    cell.textLabel.text = sourceItemRSS[indexPath.row].name;
+    cell.detailTextLabel.text = [sourceItemRSS[indexPath.row].url absoluteString];
     
     // Configure the cell...
     
     return cell;
 }
-*/
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"IDSegueNewsList" sender:sourceItemRSS[indexPath.row]];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,14 +117,19 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"IDSegueNewsList"])
+    {
+        
+    }
+    
 }
-*/
+
 
 @end

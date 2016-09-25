@@ -11,10 +11,13 @@
 
 @interface UIRssNewsTableViewController : UITableViewController
 {
+    // Массив для хранения элементов представлющих новость
     NSMutableArray<TTRssNewsModel*> * collectionRssNews;
 }
 
+// Своиство для хранения имени ресурса новостей
 @property (nonatomic, strong) NSString * sourceName;
+// Cвоиство для хранения url адреса ресурса новостей
 @property (nonatomic, strong) NSURL * sourceURL;
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "UIRssNewsTableViewController.h"
+#import "UIRssNewsDetailViewController.h"
 #import "TTRssNewsParser.h"
 #import "TTRssNewsModel.h"
 #import "TTRssSQL.h"
@@ -22,8 +23,11 @@
 {
     [super viewDidLoad];
     
+    // Создаем объект для обращения к базе данных
     TTRssSQL * sqlControl = [[TTRssSQL alloc] init];
     
+    // Загружаем имеющиеся новости из базы данных
+    // в callback заполняем массив данных для представления новостей
     [sqlControl loadRssNewsWithSource:_sourceName withCallback:^(NSArray * list) {
         collectionRssNews = [[NSMutableArray alloc] init];
         
@@ -34,9 +38,15 @@
         }
     }];
     
+    // Создаем объект для получения данных из RSS ресурса
     TTRssNewsParser * parser = [[TTRssNewsParser alloc] init];
-
+    
+    
+    // Загружаем новости из интернет-ресурса по ссылке _sourceURL,
+    // по завершении загрузки и парсинга вызываем блок обработки
     [parser getNewsRssDictionaryWithSourceURL:_sourceURL andCallback:^(NSArray *rssNewsArray, BOOL error) {
+        // Если ошибок при получении данных не было,
+        // заполняем массив данных для представления из словаря полученного после парсинга XML
         if (!error){
             collectionRssNews = [[NSMutableArray alloc] init];
     
@@ -45,9 +55,12 @@
                 [collectionRssNews addObject:itemNews];
             }
             
+            // Обновляем содержимое tableView
             [self.tableView reloadData];
             
+            // Создаем таблицу для хранения полученных данных
             [sqlControl createNewsTable];
+            // Сохраняем данные в базе
             [sqlControl saveRssNewsWithName:_sourceName fromArray:rssNewsArray];
             
         }
@@ -91,6 +104,10 @@
     return cell;
 }
 
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"IDDetailRssNewsSegue" sender:collectionRssNews[indexPath.row]];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -126,14 +143,23 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"IDDetailRssNewsSegue"]){
+        UIRssNewsDetailViewController * destination = [segue destinationViewController];
+        TTRssNewsModel * newsItem = (TTRssNewsModel*)sender;
+        
+        // Устанавливаем в контроллере назначения заголовок и текст новости
+        destination.headerRssNews = newsItem.title;
+        destination.detailTextRssNews = newsItem.detail;
+    }
+    
 }
-*/
+
 
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef  void (^GetNewsRssCallback)(NSArray * rssNewsArray, BOOL error);
+typedef void (^GetNewsRssCallback)(NSArray * rssNewsArray, BOOL error);
 
 
 @interface TTRssNewsParser : NSObject <NSXMLParserDelegate>
@@ -16,6 +16,6 @@ typedef  void (^GetNewsRssCallback)(NSArray * rssNewsArray, BOOL error);
     NSXMLParser * parser;
 }
 
--(void)getNewsRssDictionaryWithSourceURL:(NSURL*)sourceURL andCallback:(GetNewsRssCallback)callback;
+- (void)getNewsRssDictionaryWithSourceURL:(NSURL*)sourceURL andCallback:(GetNewsRssCallback)callback;
 
 @end

@@ -6,7 +6,9 @@
 //  Copyright © 2016 doungram. All rights reserved.
 //
 
+
 #import "TTRssNewsParser.h"
+
 
 @interface TTRssNewsParser ()
 {
@@ -19,62 +21,59 @@
 
 @implementation TTRssNewsParser
 
--(instancetype)init{
-    if ((self = [super init]))
+- (void)getNewsRssDictionaryWithSourceURL:(NSURL*)sourceURL andCallback:(GetNewsRssCallback)callback
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask * task = [session dataTaskWithURL:sourceURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
     {
-        
+        if (!error){
+            parser = [[NSXMLParser alloc] initWithData:data];
+            [parser setDelegate:self];
+            if ([parser parse]){
+                callback(collectionNews, NO);
+            }
+        } else {
+            callback(nil, YES);
+        }
+    }];
     
-    }
-    return self;
-}
-
--(void)getNewsRssDictionaryWithSourceURL:(NSURL*)sourceURL andCallback:(GetNewsRssCallback)callback
-{
-    BOOL error = YES;
-    parser = [[NSXMLParser alloc] initWithContentsOfURL:sourceURL];
-    if (!parser){
-        callback(nil, error);
-        return;
-    }
-    
-    [parser setDelegate:self];
-    if ([parser parse])
-        callback(collectionNews, NO);
+    [task resume];
     
 }
 
-
-
--(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict
 {
-    if ([elementName isEqualToString:@"rss"])
+    if ([elementName isEqualToString:@"rss"]){
         collectionNews = [[NSMutableArray alloc] init];
-    if ([elementName isEqualToString:@"item"])
-        item = [[NSMutableDictionary alloc] init];
+    }
     
-
+    if ([elementName isEqualToString:@"item"]){
+        item = [[NSMutableDictionary alloc] init];
+    }
 }
 
--(void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     if (!stringForParse){
         stringForParse = [[NSMutableString alloc] initWithString:string];
-    }else
-    {
+    } else {
         [stringForParse appendString:string];
     }
 }
 
--(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-    if ([elementName isEqualToString:@"title"])
+    if ([elementName isEqualToString:@"title"]){
         [item setValue:[stringForParse stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] forKey:@"title"];
+    }
     
-    if ([elementName isEqualToString:@"description"])
+    if ([elementName isEqualToString:@"description"]){
         [item setValue:[stringForParse stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] forKey:@"detail"];
+    }
     
-    if ([elementName isEqualToString:@"item"])
+    if ([elementName isEqualToString:@"item"]){
         [collectionNews addObject:item];
+    }
     
     stringForParse = nil;
 }

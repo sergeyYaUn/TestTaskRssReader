@@ -18,42 +18,41 @@
 
 @implementation UIRssNewsTableViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    
-    __block BOOL errorConnection = NO;
     
     TTRssSQL * sqlControl = [[TTRssSQL alloc] init];
     
-    TTRssNewsParser * parser = [[TTRssNewsParser alloc] init];
-    [parser getNewsRssDictionaryWithSourceURL:_sourceURL andCallback:^(NSArray *rssNewsArray, BOOL error) {
+    [sqlControl loadRssNewsWithSource:_sourceName withCallback:^(NSArray * list) {
+        collectionRssNews = [[NSMutableArray alloc] init];
         
+        for (NSDictionary * item in list){
+            TTRssNewsModel * itemNews = [[TTRssNewsModel alloc] initWithSource:item[@"source"] andTitle:item[@"title"] andDetail:item[@"detail"]];
+            [collectionRssNews addObject:itemNews];
+            [self.tableView reloadData];
+        }
+    }];
+    
+    TTRssNewsParser * parser = [[TTRssNewsParser alloc] init];
+
+    [parser getNewsRssDictionaryWithSourceURL:_sourceURL andCallback:^(NSArray *rssNewsArray, BOOL error) {
         if (!error){
             collectionRssNews = [[NSMutableArray alloc] init];
     
             for (NSDictionary * item in rssNewsArray){
-                TTRssNewsModel * itemNews = [[TTRssNewsModel alloc] initWithSource:item[@"source"] andTitle:item[@"title"] andDetail:item[@"detail"]];
+                TTRssNewsModel * itemNews = [[TTRssNewsModel alloc] initWithSource:_sourceName andTitle:item[@"title"] andDetail:item[@"detail"]];
                 [collectionRssNews addObject:itemNews];
             }
             
+            [self.tableView reloadData];
+            
+            [sqlControl createNewsTable];
             [sqlControl saveRssNewsWithName:_sourceName fromArray:rssNewsArray];
             
-        }else{
-            errorConnection = error;
         }
     }];
-    
-    if (errorConnection)
-    {
-        [sqlControl loadRssNewsWithSource:_sourceName withCallback:^(NSArray * list) {
-            collectionRssNews = [[NSMutableArray alloc] init];
-            for (NSDictionary * item in list){
-                TTRssNewsModel * itemNews = [[TTRssNewsModel alloc] initWithSource:item[@"source"] andTitle:item[@"title"] andDetail:item[@"detail"]];
-                [collectionRssNews addObject:itemNews];
-            }
-        }];
-        
-    }
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -79,16 +78,16 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IDRssNewsCell" forIndexPath:indexPath];
     
-    if(!cell)
+    if(!cell){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"IDRssNewsCell" ];
+    }
     // Configure the cell...
-    
     cell.textLabel.text = collectionRssNews[indexPath.row].title;
-    
-    
+
     return cell;
 }
 

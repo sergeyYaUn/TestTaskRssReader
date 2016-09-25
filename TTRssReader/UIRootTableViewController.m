@@ -21,23 +21,19 @@
     self.navigationItem.title = @"RSS list";
     
     TTRssSQL * sql = [[TTRssSQL alloc] init];
-    
-     if ([sql createSourceTable])
-     [sql appendSourceItemWithName:@"Yandex.ru" andURL:@"https://news.yandex.ru/index.rss"];
-    
+      
+    if ([sql createSourceTable]){
+        [sql appendSourceItemWithName:@"Yandex.ru" andURL:@"https://news.yandex.ru/index.rss"];
+    }
     
     sourceItemRSS = [[NSMutableArray alloc] init];
     
-    [sql getSourceItemsArrayWithCallback:^(NSArray * sourceSqlRss) {
-
-        for (NSDictionary * source in sourceSqlRss)
-        {
+    [sql getSourceItemsArrayWithCallback:^(NSArray * sourceSqlRss){
+        for (NSDictionary * source in sourceSqlRss){
             TTRssSourceModel * sourceRSS = [[TTRssSourceModel alloc] initWithName:[source valueForKey:@"name"] andURL:[source valueForKey:@"url"]];
             
-            NSLog(@"%@", source);
             [sourceItemRSS addObject:sourceRSS];
         }
-        NSLog(@"%@", sourceItemRSS);
         [self.tableView reloadData];
     }];
     
@@ -69,13 +65,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IDSourceRSSCell" forIndexPath:indexPath];
     
-    if (cell == nil)
+    if (!cell){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"IDSourceRSSCell"];
+    }
     
+    // Configure the cell...
     cell.textLabel.text = sourceItemRSS[indexPath.row].name;
     cell.detailTextLabel.text = [sourceItemRSS[indexPath.row].url absoluteString];
     
-    // Configure the cell...
+
     
     return cell;
 }
@@ -125,8 +123,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"IDSegueNewsList"])
-    {
+    if ([segue.identifier isEqualToString:@"IDSegueNewsList"]){
         UIRssNewsTableViewController * destination = [segue destinationViewController];
         destination.sourceURL = ((TTRssSourceModel*)sender).url;
         destination.sourceName = ((TTRssSourceModel*)sender).name;

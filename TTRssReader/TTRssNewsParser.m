@@ -21,18 +21,22 @@
 
 @implementation TTRssNewsParser
 
+// Получение rss по адресу sourceURL
 - (void)getNewsRssDictionaryWithSourceURL:(NSURL*)sourceURL andCallback:(GetNewsRssCallback)callback
 {
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask * task = [session dataTaskWithURL:sourceURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
     {
         if (!error){
+            // Если при получении данных с ресурса ошибок не было, парсим данные
             parser = [[NSXMLParser alloc] initWithData:data];
             [parser setDelegate:self];
             if ([parser parse]){
+                // В callback заполняем массив для представления
                 callback(collectionNews, NO);
             }
         } else {
+            // или сообщаем об ошибке
             callback(nil, YES);
         }
     }];

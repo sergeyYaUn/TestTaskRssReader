@@ -8,6 +8,7 @@
 
 #import "UIRootTableViewController.h"
 #import "UIRssNewsTableViewController.h"
+#import "UIAddSourceViewController.h"
 
 @interface UIRootTableViewController ()
 
@@ -15,19 +16,23 @@
 
 @implementation UIRootTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.navigationItem.title = @"RSS list";
     
+    // Создаем обект для работы с базой данных
     TTRssSQL * sql = [[TTRssSQL alloc] init];
-      
+    
+    // Создаем таблицу, добаляем запись
     if ([sql createSourceTable]){
         [sql appendSourceItemWithName:@"Yandex.ru" andURL:@"https://news.yandex.ru/index.rss"];
     }
     
     sourceItemRSS = [[NSMutableArray alloc] init];
     
+    // Заполняем массив для представления 
     [sql getSourceItemsArrayWithCallback:^(NSArray * sourceSqlRss){
         for (NSDictionary * source in sourceSqlRss){
             TTRssSourceModel * sourceRSS = [[TTRssSourceModel alloc] initWithName:[source valueForKey:@"name"] andURL:[source valueForKey:@"url"]];
@@ -82,6 +87,12 @@
 {
     [self performSegueWithIdentifier:@"IDSegueNewsList" sender:sourceItemRSS[indexPath.row]];
 }
+
+-(IBAction)addSourceRss
+{
+    [self performSegueWithIdentifier:@"IDAddSourceRssSegue" sender:nil];
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,7 +106,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+       // [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        NSLog(@"Edit");
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
@@ -129,6 +141,30 @@
         destination.sourceName = ((TTRssSourceModel*)sender).name;
     }
     
+    if ([segue.identifier isEqualToString:@"IDAddSourceRssSegue"]){
+        UIAddSourceViewController * destination = [segue destinationViewController];
+        
+        // Определяем действия по добавлению ресурса новостей из модального UIAddSourceViewController
+        destination.callback = ^(NSString * name, NSString *source){
+            
+            TTRssSQL * sql = [[TTRssSQL alloc] init];
+            
+            // Добавляем запись в базу
+            [sql appendSourceItemWithName:name andURL:source];
+            sourceItemRSS = [[NSMutableArray alloc] init];
+            
+            // Обновляем массив для отображения
+            [sql getSourceItemsArrayWithCallback:^(NSArray * sourceSqlRss){
+                for (NSDictionary * source in sourceSqlRss){
+                    TTRssSourceModel * sourceRSS = [[TTRssSourceModel alloc] initWithName:[source valueForKey:@"name"] andURL:[source valueForKey:@"url"]];
+                    
+                    [sourceItemRSS addObject:sourceRSS];
+                }
+                // Обновляем tableView
+                [self.tableView reloadData];
+            }];
+        };
+    }
 }
 
 

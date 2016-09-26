@@ -20,6 +20,7 @@
 		8493D44F1D910CA700BCCD26 /* TTRssNewsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D44E1D910CA700BCCD26 /* TTRssNewsParser.m */; };
 		8493D4521D910DB100BCCD26 /* UIRssNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493D4511D910DB100BCCD26 /* UIRssNewsTableViewController.m */; };
 		84BB53821D91BD4900FAC214 /* TTRssNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BB53811D91BD4900FAC214 /* TTRssNewsModel.m */; };
+		84E6C11E1D98757400A608B5 /* UIAddSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6C11D1D98757400A608B5 /* UIAddSourceViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		8493D4511D910DB100BCCD26 /* UIRssNewsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIRssNewsTableViewController.m; sourceTree = "<group>"; };
 		84BB53801D91BD4900FAC214 /* TTRssNewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRssNewsModel.h; sourceTree = "<group>"; };
 		84BB53811D91BD4900FAC214 /* TTRssNewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRssNewsModel.m; sourceTree = "<group>"; };
+		84E6C11C1D98757400A608B5 /* UIAddSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAddSourceViewController.h; sourceTree = "<group>"; };
+		84E6C11D1D98757400A608B5 /* UIAddSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAddSourceViewController.m; sourceTree = "<group>"; };
 		84F8E51E1D91E2BB001BE4A7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -94,6 +97,8 @@
 				8493D4511D910DB100BCCD26 /* UIRssNewsTableViewController.m */,
 				842395CD1D98450300576659 /* UIRssNewsDetailViewController.h */,
 				842395CE1D98450300576659 /* UIRssNewsDetailViewController.m */,
+				84E6C11C1D98757400A608B5 /* UIAddSourceViewController.h */,
+				84E6C11D1D98757400A608B5 /* UIAddSourceViewController.m */,
 				8493D4441D908A4700BCCD26 /* TTRssSourceModel.h */,
 				8493D4451D908A4700BCCD26 /* TTRssSourceModel.m */,
 				84BB53801D91BD4900FAC214 /* TTRssNewsModel.h */,
@@ -204,6 +209,7 @@
 				8493D4431D9085E700BCCD26 /* UIRootTableViewController.m in Sources */,
 				8493D4461D908A4700BCCD26 /* TTRssSourceModel.m in Sources */,
 				842395CF1D98450300576659 /* UIRssNewsDetailViewController.m in Sources */,
+				84E6C11E1D98757400A608B5 /* UIAddSourceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

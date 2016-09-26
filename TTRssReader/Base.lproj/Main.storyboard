@@ -46,14 +46,21 @@
                             <outlet property="delegate" destination="681-o5-nWX" id="7JI-v0-Mvu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="qye-5i-ogd"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="qye-5i-ogd">
+                        <barButtonItem key="rightBarButtonItem" title="+" id="7vh-Wt-QdX">
+                            <connections>
+                                <action selector="addSourceRss" destination="681-o5-nWX" id="9Dg-5S-5G1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="3eW-f1-aQM" kind="show" identifier="IDSegueNewsList" id="0e6-Bp-46z"/>
+                        <segue destination="1Pk-dr-Rm9" kind="presentation" identifier="IDAddSourceRssSegue" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="aEE-Ia-RK4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ze-mw-v58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1" y="-1"/>
+            <point key="canvasLocation" x="-2.3999999999999999" y="-1.3493253373313345"/>
         </scene>
         <!--Rss News Table View Controller-->
         <scene sceneID="pm4-7n-ISa">
@@ -145,6 +152,94 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O6v-Yy-saC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-953" y="-1"/>
+        </scene>
+        <!--iAdd Source View Controller-->
+        <scene sceneID="3iy-Sa-DY2">
+            <objects>
+                <viewController modalPresentationStyle="currentContext" id="1Pk-dr-Rm9" customClass="UIAddSourceViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pzp-Xm-wYU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PdE-CL-nHP">
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add source" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zk4-tP-6nQ">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="327" id="HiC-5c-gcS"/>
+                                            <constraint firstAttribute="height" constant="36" id="zxM-3k-7zy"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter name source" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ep3-Zr-44V">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1Pk-dr-Rm9" id="DXJ-ei-IKX"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL address for source" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l2a-1f-rh9">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1Pk-dr-Rm9" id="tTv-Xv-tzz"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hb-3W-q0O">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="hpv-b6-VrH"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelOperationAction" destination="1Pk-dr-Rm9" eventType="touchUpInside" id="cQG-Qf-fOl"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BT5-cT-rfw">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="61E-bp-Jqj"/>
+                                        </constraints>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="addSourceAction" destination="1Pk-dr-Rm9" eventType="touchUpInside" id="s1n-cT-4N1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90841105085110896" green="1" blue="0.91605756951345652" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="BT5-cT-rfw" firstAttribute="top" secondItem="l2a-1f-rh9" secondAttribute="bottom" constant="46" id="0gl-bq-A8c"/>
+                                    <constraint firstAttribute="trailing" secondItem="l2a-1f-rh9" secondAttribute="trailing" constant="8" id="3c8-d9-ySe"/>
+                                    <constraint firstItem="5hb-3W-q0O" firstAttribute="top" secondItem="l2a-1f-rh9" secondAttribute="bottom" constant="46" id="63R-bv-Lhb"/>
+                                    <constraint firstItem="l2a-1f-rh9" firstAttribute="leading" secondItem="PdE-CL-nHP" secondAttribute="leading" constant="8" id="AAz-M7-zJT"/>
+                                    <constraint firstItem="BT5-cT-rfw" firstAttribute="leading" secondItem="PdE-CL-nHP" secondAttribute="leading" constant="8" id="JQw-Kk-UOF"/>
+                                    <constraint firstAttribute="trailing" secondItem="5hb-3W-q0O" secondAttribute="trailing" constant="8" id="Llh-PG-LBE"/>
+                                    <constraint firstItem="Ep3-Zr-44V" firstAttribute="leading" secondItem="PdE-CL-nHP" secondAttribute="leading" constant="8" id="Oyu-N2-tp0"/>
+                                    <constraint firstItem="Ep3-Zr-44V" firstAttribute="top" secondItem="PdE-CL-nHP" secondAttribute="top" constant="75" id="Sa5-g9-0fL"/>
+                                    <constraint firstItem="Zk4-tP-6nQ" firstAttribute="top" secondItem="PdE-CL-nHP" secondAttribute="top" constant="31" id="Xs2-15-LIo"/>
+                                    <constraint firstItem="Zk4-tP-6nQ" firstAttribute="centerX" secondItem="PdE-CL-nHP" secondAttribute="centerX" id="YFD-ep-RIe"/>
+                                    <constraint firstItem="l2a-1f-rh9" firstAttribute="top" secondItem="PdE-CL-nHP" secondAttribute="top" constant="128" id="fCW-ge-GQ9"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ep3-Zr-44V" secondAttribute="trailing" constant="8" id="han-2y-lSE"/>
+                                    <constraint firstAttribute="height" constant="263" id="xOG-rM-Vfi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="PdE-CL-nHP" firstAttribute="top" secondItem="pzp-Xm-wYU" secondAttribute="topMargin" constant="101" id="0Ph-5u-JmC"/>
+                            <constraint firstAttribute="bottomMargin" relation="lessThanOrEqual" secondItem="PdE-CL-nHP" secondAttribute="bottom" constant="303" id="dP6-4S-aGl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PdE-CL-nHP" secondAttribute="trailing" id="j3G-C0-7nf"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="PdE-CL-nHP" secondAttribute="leading" id="nVN-kU-nCk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nameSourceTextField" destination="Ep3-Zr-44V" id="bj3-Bx-c81"/>
+                        <outlet property="urlSourceTextField" destination="l2a-1f-rh9" id="ajI-Ib-VmQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Brz-F0-hGS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2.3999999999999999" y="751.57421289355329"/>
         </scene>
     </scenes>
 </document>

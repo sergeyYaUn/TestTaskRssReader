@@ -20,6 +20,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     return self;
 }
 
+// Открытие базы данных
 - (BOOL)openDatabaseWithName:(NSString*)name
 {
     NSString * databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
@@ -32,6 +33,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     
 }
 
+// Закрытие базы данных
 - (void)closeDatabase
 {
     if (database){
@@ -39,6 +41,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     }
 }
 
+// Создание таблицы ресурсов новостей
 - (BOOL)createSourceTable
 {
     if ([self openDatabaseWithName:TTRssDatabaseName]){
@@ -59,6 +62,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     return NO;
 }
 
+// Создание таблицы для новостей
 - (BOOL)createNewsTable
 {
     if ([self openDatabaseWithName:TTRssDatabaseName]){
@@ -79,6 +83,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     return NO;
 }
 
+// Получение массива ресурсов новостей из базы данных
 - (void)getSourceItemsArrayWithCallback:(GetSourceArrayCallback)callback
 {
     NSMutableArray * sourceItems = [[NSMutableArray alloc] init];
@@ -104,6 +109,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     }
 }
 
+// Добавление ресурса в базу данных
 - (BOOL)appendSourceItemWithName:(NSString *)name andURL:(NSString *)url
 {
     if ([self openDatabaseWithName:TTRssDatabaseName]){
@@ -123,6 +129,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     return NO;
 }
 
+// Сохранение новых данных с ресурса в базу данных
 - (BOOL)saveRssNewsWithName:(NSString*)sourceName fromArray:(NSArray<NSDictionary*>*)array
 {
     if([self openDatabaseWithName:TTRssDatabaseName]){
@@ -156,6 +163,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     return NO;
 }
 
+// Загрузка списка новостей из базы данных
 - (void)loadRssNewsWithSource:(NSString*)sourceName withCallback:(GetSourceArrayCallback)callback
 {
     if([self openDatabaseWithName:TTRssDatabaseName]){
@@ -181,6 +189,7 @@ static NSString * const TTRssDatabaseName = @"rssDb.sql3";
     }
 }
 
+// Удаление таблицы ресурсов новостей
 - (BOOL)deleteSourceTable
 {
     if ([self openDatabaseWithName:TTRssDatabaseName]){

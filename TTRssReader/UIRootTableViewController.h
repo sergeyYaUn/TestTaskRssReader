@@ -17,4 +17,6 @@
     NSMutableArray<TTRssSourceModel*> * sourceItemRSS;
 }
 
+- (IBAction)addSourceRss;
+
 @end
